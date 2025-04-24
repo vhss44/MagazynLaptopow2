@@ -46,6 +46,25 @@ namespace Magazyn
             this.Close();
         }
 
-     
+        private void UserButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserPopup.IsOpen = !UserPopup.IsOpen;
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserPopup.IsOpen = false;
+            var result = MessageBox.Show("Czy na pewno chcesz się wylogować?",
+                                       "Potwierdzenie",
+                                       MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                LoginWindow mainWindow = new LoginWindow();
+                mainWindow.Show();
+                this.Close();
+            }
+        }
+
     }
 }
