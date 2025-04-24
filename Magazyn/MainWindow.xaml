@@ -78,6 +78,6 @@
             </Button>
         </StackPanel>
 
-        <Label Content="Strona głowna" FontSize="120" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Label Content="Strona głownaa" FontSize="120" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
     </Grid>
 </Window>
