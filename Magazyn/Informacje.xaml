@@ -47,7 +47,7 @@
         <Border Background="#334251" Height="40" Grid.ColumnSpan="2">
 
             <Grid>
-                <Button x:Name="btnS"  Width="40" Height="40" HorizontalAlignment="Left" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center">
+                <Button x:Name="btnS"  Width="40" Height="40" HorizontalAlignment="Left" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Click="btnS_Click" >
                     <Image Source ="pack://application:,,,/img/home.png"  Stretch="Uniform"></Image>
                 </Button>
                 <Button x:Name="UserButton" Width="40" Height="40" Margin="0,0,10,0" HorizontalAlignment="Right" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Click="UserButton_Click">
@@ -68,7 +68,7 @@
         <StackPanel Grid.Column="0" Grid.Row="1" Background="#51657b" Orientation="Vertical">
             <!--DODAWANIE PRODUKTU-->
 
-            <Button Background="#27313c" Foreground="#e4e5e7">
+            <Button Background="#27313c" Foreground="#e4e5e7" >
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 

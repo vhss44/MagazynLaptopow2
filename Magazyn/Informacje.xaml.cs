@@ -66,5 +66,9 @@ namespace Magazyn
             }
         }
 
+        private void btnS_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
