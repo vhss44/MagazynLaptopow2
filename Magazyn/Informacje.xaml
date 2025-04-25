@@ -109,8 +109,28 @@
                     <TextBlock VerticalAlignment="Center" Text="Informacje" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
                 </StackPanel>
             </Button>
-        </StackPanel>
 
-        <Label Content="Informacje" FontSize="120" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        
+          </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="650"></ColumnDefinition>
+                <ColumnDefinition Width="650"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="220"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <Label Content="Twórcy" FontSize="40" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+            <Label Content="Damian Chmura" FontSize="25" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Foreground="#535353" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50 ,0, 0"></Label>
+            <Label Content="Julia Daniluk" FontSize="25" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Foreground="#535353" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,90 ,0, 0"></Label>
+            <Label Content="Mateusz Dytkowski" FontSize="25" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Foreground="#535353" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,130 ,0, 0"></Label>
+            <Label Content="Bartosz Szumiak" FontSize="25" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Foreground="#535353" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,170 ,0, 0"></Label>
+            
+        </Grid>
+       
     </Grid>
 </Window>
