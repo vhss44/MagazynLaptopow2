@@ -68,7 +68,7 @@
         <StackPanel Grid.Column="0" Grid.Row="1" Background="#51657b" Orientation="Vertical">
             <!--DODAWANIE PRODUKTU-->
 
-            <Button Background="#27313c" Foreground="#e4e5e7" >
+            <Button x:Name="DodajProduktBtn" Background="#27313c" Foreground="#e4e5e7" Click="DodajProduktBtn_Click">
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 

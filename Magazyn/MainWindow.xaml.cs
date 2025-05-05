@@ -87,6 +87,13 @@ namespace Magazyn
                 this.Close();
             }
         }
+
+        private void DodajProduktBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DodajProdukt mainWindow = new DodajProdukt();
+            mainWindow.Show();
+        
+        }
     }
 
 }

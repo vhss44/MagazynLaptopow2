@@ -50,6 +50,12 @@ namespace Magazyn
         {
             UserPopup.IsOpen = !UserPopup.IsOpen;
         }
+        private void DodajProduktBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DodajProdukt mainWindow = new DodajProdukt();
+            mainWindow.Show();
+
+        }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
@@ -66,9 +72,6 @@ namespace Magazyn
             }
         }
 
-        private void btnS_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
     }
 }
