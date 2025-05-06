@@ -8,11 +8,11 @@ namespace Biblioteka
 {
     public class Laptop
     {
-        public String numSer { get; set; }
-        public String marka { get; set; }
-        public String model { get; set; }
-        public String systemOperacyjny { get; set; }
-        public int iloscSztuk { get; set; }
+        public String NumerSeryjny { get; set; }
+        public String Marka { get; set; }
+        public String Model { get; set; }
+        public String SystemOperacyjny { get; set; }
+        public int IloscSztuk { get; set; }
 
     }
 }

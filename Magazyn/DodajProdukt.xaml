@@ -47,18 +47,18 @@
                 <ListView x:Name="LaptopsListView" Grid.Row="0">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Nr seryjny" DisplayMemberBinding="{Binding SerialNumber}" Width="100"/>
-                            <GridViewColumn Header="Marka" DisplayMemberBinding="{Binding Brand}" Width="100"/>
+                            <GridViewColumn Header="Nr seryjny" DisplayMemberBinding="{Binding NumerSeryjny}" Width="100"/>
+                            <GridViewColumn Header="Marka" DisplayMemberBinding="{Binding Marka}" Width="100"/>
                             <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="120"/>
-                            <GridViewColumn Header="System" DisplayMemberBinding="{Binding OperatingSystem}" Width="100"/>
-                            <GridViewColumn Header="Ilość" DisplayMemberBinding="{Binding Quantity}" Width="50"/>
+                            <GridViewColumn Header="System" DisplayMemberBinding="{Binding SystemOperacyjny}" Width="100"/>
+                            <GridViewColumn Header="Ilość" DisplayMemberBinding="{Binding IloscSztuk}" Width="50"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                    <Button x:Name="RefreshButton" Content="Odśwież listę" Width="100" Margin="0,0,10,0"/>
-                    <Button x:Name="AddButton" Content="Dodaj produkt" Width="100"/>
+                    <Button x:Name="DeleteButton" Content="Usuń produkt" Width="100" Margin="0, 0, 10, 0" Click="DeleteButton_Click"/>
+                    <Button x:Name="AddButton" Content="Dodaj produkt" Width="100" Click="AddButton_Click"/>
                 </StackPanel>
             </Grid>
         </GroupBox>

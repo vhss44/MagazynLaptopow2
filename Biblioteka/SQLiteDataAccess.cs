@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using System.Collections.Generic;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
@@ -14,18 +16,26 @@ namespace Biblioteka
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<Laptop>("select * from Laptopy", new DynamicParameters());
+                var output = cnn.Query<Laptop>("SELECT * FROM Laptopy", new DynamicParameters());
                 return output.ToList();
             }
         }
 
-        public static void zapiszLaptop(Laptop laptop)
+        public static void ZapiszLaptop(Laptop laptop)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("insert into Laptopy (numSer, marka, model, systemOperacyjny, iloscSztuk) values (@numSer, @marka, @model, @systemOperacyjny, @iloscSztuk)", laptop);
+                cnn.Execute("INSERT INTO Laptopy (NumerSeryjny, Marka, Model, SystemOperacyjny, IloscSztuk) VALUES (@NumerSeryjny, @Marka, @Model, @SystemOperacyjny, @IloscSztuk)", laptop);
             }
 
+        }
+
+        public static void UsunLaptop(string NumerSeryjny)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("DELETE FROM Laptopy WHERE NumerSeryjny = @NumerSeryjny", new { NumerSeryjny });
+            }
         }
 
 
@@ -36,3 +46,4 @@ namespace Biblioteka
     }
 
 }
+
