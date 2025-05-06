@@ -1,0 +1,116 @@
+﻿<Window x:Class="Magazyn.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Magazyn"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1600"
+        WindowState="Maximized">
+    <Window.Resources>
+        <Style x:Key="MenuItemButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#e4e5e7"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#51657b"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Background="#334251" Height="40" Grid.ColumnSpan="2">
+        
+            <Grid>
+                <Button x:Name="btnS"  Width="40" Height="40" HorizontalAlignment="Left" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center">
+                    <Image Source ="pack://application:,,,/img/home.png"  Stretch="Uniform"></Image>
+                </Button>
+                <Button x:Name="UserButton" Width="40" Height="40" Margin="0,0,10,0" HorizontalAlignment="Right" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Click="UserButton_Click">
+                    <Image Source="pack://application:,,,/img/person.png" Stretch="Uniform"/>
+                </Button>
+
+                <Popup x:Name="UserPopup" PlacementTarget="{Binding ElementName=UserButton}" Placement="Bottom" StaysOpen="False" AllowsTransparency="True">
+                    <Border Background="#334251" CornerRadius="5" Padding="5" BorderBrush="#51657b" BorderThickness="1">
+                        <StackPanel>
+                            <Button Content="Wyloguj" Click="LogoutButton_Click" Style="{StaticResource MenuItemButtonStyle}"/>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+            
+        </Border>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Background="#51657b" Orientation="Vertical">
+            <!--DODAWANIE PRODUKTU-->
+
+            <Button x:Name="DodajProduktBtn" Background="#27313c" Foreground="#e4e5e7" Click="DodajProduktBtn_Click">
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <Image Source ="pack://application:,,,/img/plus.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
+                    <TextBlock VerticalAlignment="Center" Text="Dodaj produkt" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                </StackPanel>
+            </Button>
+
+
+            <!--MAGAZYN-->
+            
+            <Button x:Name="MagazynBtn" Background="#27313c" Foreground="#e4e5e7" Click="MagazynBtn_Click">
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <Image Source ="pack://application:,,,/img/package.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
+                    <TextBlock VerticalAlignment="Center" Text="Magazyn" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                </StackPanel>
+            </Button>
+
+
+            <!--RAPORT-->
+            <Button x:Name="RaportBtn" Background="#27313c" Foreground="#e4e5e7" Click="RaportBtn_Click">
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <Image Source ="pack://application:,,,/img/raport.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
+                    <TextBlock VerticalAlignment="Center" Text="Raport" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                </StackPanel>
+            </Button>
+
+            <!--INFORMACJE-->
+            <Button x:Name="InformacjeBtn" Background="#27313c" Foreground="#e4e5e7" Click="InformacjeBtn_Click">
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <Image Source ="pack://application:,,,/img/info.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
+                    <TextBlock VerticalAlignment="Center" Text="Informacje" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <Label Content="Strona główna" FontSize="120" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+    </Grid>
+</Window>
