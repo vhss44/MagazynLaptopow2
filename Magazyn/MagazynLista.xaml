@@ -117,11 +117,13 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Szukaj po nr. seryjnym" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
-            <TextBox x:Name="txtFilter" Grid.Row="0" Grid.Column="1" Margin="7" Width="500" HorizontalAlignment="Left" TextChanged="txtFilter_TextChanged"></TextBox>
+            <Label Content="Szukaj po nr. seryjnym:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+            <TextBox x:Name="txtFilter" Grid.Row="0" Grid.Column="1" Margin="7" Width="500" HorizontalAlignment="Left" VerticalContentAlignment="Center" TextChanged="txtFilter_TextChanged"></TextBox>
         </Grid>
+
+       
         
-        <DataGrid x:Name="LaptopsListView" Sorting="LaptopySortowanie" AutoGenerateColumns="False" CanUserSortColumns="True" SelectionMode="Single" IsReadOnly="True" ItemsSource="{Binding Laptopy}" Grid.Row="1" Grid.Column="1" Margin="0, 40,0,0">
+        <DataGrid x:Name="LaptopsListView" Sorting="LaptopySortowanie" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" SelectionMode="Single" ItemsSource="{Binding Laptopy}" Grid.Row="1" Grid.Column="1" Margin="0, 40,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Numer seryjny" 
                             Binding="{Binding NumerSeryjny}" 

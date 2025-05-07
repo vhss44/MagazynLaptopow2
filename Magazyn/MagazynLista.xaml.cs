@@ -14,12 +14,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+
 
 namespace Magazyn
 {
+   
+
+
 
     public partial class MagazynLista : Window
     {
+        private ObservableCollection<Laptop> laptopy = new ObservableCollection<Laptop>();
+        private ICollectionView view;
+
+
         public MagazynLista()
         {
             InitializeComponent();
@@ -72,11 +81,12 @@ namespace Magazyn
         }
         private void ZaladujLaptopy()
         {
-      
-
-            var laptopy = SQLiteDataAccess.ZaladujLaptopy();
-            LaptopsListView.ItemsSource = laptopy;
+            laptopy = new ObservableCollection<Laptop>(SQLiteDataAccess.ZaladujLaptopy());
+            view = CollectionViewSource.GetDefaultView(laptopy);
+            view.Filter = FilterByNumerSeryjny;
+            LaptopsListView.ItemsSource = view;
         }
+
         private void LaptopySortowanie(object sender, DataGridSortingEventArgs e)
         {
             var column = e.Column;
@@ -86,22 +96,20 @@ namespace Magazyn
 
         private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtFilter.Text))
-            {
-                LaptopsListView.ItemsSource = originalLaptopyList;
-                return;
-            }
-
-            var filtered = originalLaptopyList
-                .Where(l => l.NumerSeryjny.Contains(txtFilter.Text, StringComparison.OrdinalIgnoreCase) ||
-                           l.Marka.Contains(txtFilter.Text, StringComparison.OrdinalIgnoreCase) ||
-                           l.Model.Contains(txtFilter.Text, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            LaptopsListView.ItemsSource = filtered;
+            view.Refresh();
         }
+        private bool FilterByNumerSeryjny(object obj)
+        {
+            if (obj is Laptop laptop)
+            {
+                return string.IsNullOrWhiteSpace(txtFilter.Text) ||
+                       laptop.NumerSeryjny.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+            return false;
+        }
+
     }
 
- }
+}
 
 
