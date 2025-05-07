@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using Biblioteka;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Dapper;
+using System.Data.SQLite;
 
 namespace Magazyn
 {
@@ -25,13 +27,22 @@ namespace Magazyn
         public SeriesCollection SeriesCollection { get; set; }
         public List<string> Labels { get; set; }
 
-        public Raport()
+        // JEDYNY KONSTRUKTOR
+        public Raport(List<Laptop> laptopy)
         {
-            InitializeComponent();
+            InitializeComponent(); // BRAKOWAŁO TEJ LINII!
             DataContext = this;
+            GenerujRaport(laptopy);
+        }
 
-            // Pobierz dane z bazy
-            var laptopy = MainWindow.ZaladujLaptopy();
+        private void GenerujRaport(List<Laptop> laptopy) // poprawiona nazwa parametru (mała litera)
+        {
+            // Sprawdź czy lista nie jest pusta/null
+            if (laptopy == null || !laptopy.Any())
+            {
+                MessageBox.Show("Brak danych do raportu!");
+                return;
+            }
 
             // 1. Podsumowanie tekstowe
             txtRaport.Text = $"Raport z dnia: {DateTime.Now}\n\n" +
@@ -39,7 +50,7 @@ namespace Magazyn
                            $"Liczba modeli: {laptopy.Count}\n" +
                            $"Unikalnych marek: {laptopy.Select(l => l.Marka).Distinct().Count()}";
 
-            // 2. Laptopy na wyczerpaniu (mniej niż 3 sztuki)
+            // 2. Laptopy na wyczerpaniu
             dgMalolaptop.ItemsSource = laptopy.Where(l => l.IloscSztuk < 3).ToList();
 
             // 3. Przygotowanie wykresu
@@ -50,14 +61,15 @@ namespace Magazyn
 
             Labels = daneWykresu.Select(x => x.Marka).ToList();
             SeriesCollection = new SeriesCollection
+        {
+            new ColumnSeries
             {
-                new ColumnSeries
-                {
-                    Title = "Laptopy",
-                    Values = new ChartValues<int>(daneWykresu.Select(x => x.Ilosc))
-                }
-            };
+                Title = "Laptopy",
+                Values = new ChartValues<int>(daneWykresu.Select(x => x.Ilosc))
+            }
+        };
         }
+
 
         private void btnS_Click(object sender, RoutedEventArgs e)
         {

@@ -25,6 +25,8 @@ namespace Magazyn
 
     public partial class MagazynLista : Window
     {
+        public List<Laptop> Laptopy { get; set; }
+
         private ObservableCollection<Laptop> laptopy = new ObservableCollection<Laptop>();
         private ICollectionView view;
 
@@ -44,8 +46,8 @@ namespace Magazyn
 
         private void RaportBtn_Click(object sender, RoutedEventArgs e)
         {
-            Raport mainWindow = new Raport();
-            mainWindow.Show();
+            var raport = new Raport(Laptopy); // Laptopy to lista załadowana w konstruktorze MainWindow
+            raport.Show();
             this.Close();
         }
 

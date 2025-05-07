@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biblioteka;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace Magazyn
     /// </summary>
     public partial class Informacje : Window
     {
+        public List<Laptop> Laptopy { get; set; }
         public Informacje()
         {
             InitializeComponent();
@@ -38,11 +40,10 @@ namespace Magazyn
             this.Close();
         }
 
-
         private void RaportBtn_Click(object sender, RoutedEventArgs e)
         {
-            Raport mainWindow = new Raport();
-            mainWindow.Show();
+            var raport = new Raport(Laptopy); // Laptopy to lista załadowana w konstruktorze MainWindow
+            raport.Show();
             this.Close();
         }
 

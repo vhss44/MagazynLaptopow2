@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Biblioteka;
+using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Data;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -13,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Dapper;
 
 namespace Magazyn
 {
@@ -21,9 +25,23 @@ namespace Magazyn
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<Laptop> Laptopy { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            Laptopy = ZaladujLaptopy();
+        }
+
+        private static string LoadConnectionString()
+        {
+            return "Data Source=DemoDB.db;Version=3;";
+        }
+        public List<Laptop> ZaladujLaptopy()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                return cnn.Query<Laptop>("SELECT * FROM Laptopy").ToList();
+            }
         }
 
         private void Button_DpiChanged(object sender, DpiChangedEventArgs e)
@@ -56,8 +74,8 @@ namespace Magazyn
 
         private void RaportBtn_Click(object sender, RoutedEventArgs e)
         {
-            Raport mainWindow = new Raport();
-            mainWindow.Show();
+            var raport = new Raport(Laptopy); // Laptopy to lista załadowana w konstruktorze MainWindow
+            raport.Show();
             this.Close();
         }
 
