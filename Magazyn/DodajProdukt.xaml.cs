@@ -15,15 +15,15 @@ using Biblioteka;
 
 namespace Magazyn
 {
-    /// <summary>
-    /// Logika interakcji dla klasy DodajProdukt.xaml
-    /// </summary>
     public partial class DodajProdukt : Window
     {
+        private Laptop _edytowanyLaptop = null; 
+
         public DodajProdukt()
         {
             InitializeComponent();
             ZaladujLaptopy();
+            UstawTrybDodawania();
         }
 
         private void ZaladujLaptopy()
@@ -32,9 +32,66 @@ namespace Magazyn
             LaptopsListView.ItemsSource = laptopy;
         }
 
+        private void UstawTrybDodawania()
+        {
+            _edytowanyLaptop = null;
+            AddButton.Content = "Dodaj";
+            DeleteButton.IsEnabled = true;
+            ClearButton.IsEnabled = true;
+        }
 
+        private void UstawTrybEdycji(Laptop laptop)
+        {
+            _edytowanyLaptop = laptop;
+            SerialNumberTextBox.Text = laptop.NumerSeryjny;
+            MarkaTextBox.Text = laptop.Marka;
+            ModelTextBox.Text = laptop.Model;
+            OSComboBox.SelectedItem = OSComboBox.Items
+                .Cast<ComboBoxItem>()
+                .FirstOrDefault(item => item.Content.ToString() == laptop.SystemOperacyjny);
+            QuantityTextBox.Text = laptop.IloscSztuk.ToString();
+            AddButton.Content = "Zapisz zmiany";
+            DeleteButton.IsEnabled = false; 
+            ClearButton.IsEnabled = false; 
+        }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!SprawdzPoprawnoscDanych())
+                return;
+
+            var laptop = new Laptop
+            {
+                NumerSeryjny = SerialNumberTextBox.Text,
+                Marka = MarkaTextBox.Text,
+                Model = ModelTextBox.Text,
+                SystemOperacyjny = ((ComboBoxItem)OSComboBox.SelectedItem).Content.ToString(),
+                IloscSztuk = int.Parse(QuantityTextBox.Text)
+            };
+
+            try
+            {
+                if (_edytowanyLaptop == null)
+                {
+                    SQLiteDataAccess.ZapiszLaptop(laptop);
+                    MessageBox.Show("Laptop dodany pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    SQLiteDataAccess.AktualizujLaptop(_edytowanyLaptop.NumerSeryjny, laptop);
+                    MessageBox.Show("Laptop zaktualizowany pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                    UstawTrybDodawania();
+                }
+                ZaladujLaptopy();
+                WyczyscFormularz();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Błąd: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private bool SprawdzPoprawnoscDanych()
         {
             if (string.IsNullOrWhiteSpace(SerialNumberTextBox.Text) ||
                 string.IsNullOrWhiteSpace(MarkaTextBox.Text) ||
@@ -43,48 +100,31 @@ namespace Magazyn
                 string.IsNullOrWhiteSpace(QuantityTextBox.Text))
             {
                 MessageBox.Show("Proszę uzupełnić wszystkie pola.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                return false;
             }
 
-            int ilosc;
-            if (!int.TryParse(QuantityTextBox.Text, out ilosc))
+            if (!int.TryParse(QuantityTextBox.Text, out _))
             {
                 MessageBox.Show("Ilość sztuk musi być liczbą.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                return false;
             }
 
-            var laptop = new Laptop
-            {
-                NumerSeryjny = SerialNumberTextBox.Text,
-                Marka = MarkaTextBox.Text,
-                Model = ModelTextBox.Text,
-                SystemOperacyjny = ((ComboBoxItem)OSComboBox.SelectedItem).Content.ToString(),
-                IloscSztuk = ilosc
-            };
-
-            try
-            {
-                SQLiteDataAccess.ZapiszLaptop(laptop);
-                MessageBox.Show("Laptop dodany pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
-                ZaladujLaptopy();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Błąd podczas dodawania: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            return true;
         }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (LaptopsListView.SelectedItem is Biblioteka.Laptop selectedLaptop)
+            if (LaptopsListView.SelectedItem is Laptop selectedLaptop)
             {
-                var result = MessageBox.Show($"Czy na pewno chcesz usunąć laptopa {selectedLaptop.NumerSeryjny}?",
-                                             "Potwierdzenie usunięcia",
-                                             MessageBoxButton.YesNo,
-                                             MessageBoxImage.Question);
+                var result = MessageBox.Show(
+                    $"Czy na pewno chcesz usunąć laptopa {selectedLaptop.NumerSeryjny}?",
+                    "Potwierdzenie usunięcia",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    Biblioteka.SQLiteDataAccess.UsunLaptop(selectedLaptop.NumerSeryjny);
+                    SQLiteDataAccess.UsunLaptop(selectedLaptop.NumerSeryjny);
                     ZaladujLaptopy();
                 }
             }
@@ -94,5 +134,34 @@ namespace Magazyn
             }
         }
 
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LaptopsListView.SelectedItem is Laptop selectedLaptop)
+            {
+                UstawTrybEdycji(selectedLaptop);
+            }
+            else
+            {
+                MessageBox.Show("Najpierw wybierz laptopa do edycji.", "Brak wyboru", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            WyczyscFormularz();
+            UstawTrybDodawania();
+        }
+
+        private void WyczyscFormularz()
+        {
+            SerialNumberTextBox.Clear();
+            MarkaTextBox.Clear();
+            ModelTextBox.Clear();
+            OSComboBox.SelectedIndex = -1;
+            QuantityTextBox.Clear();
+        }
+
+
+  
     }
 }

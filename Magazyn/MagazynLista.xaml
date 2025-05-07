@@ -111,6 +111,39 @@
             </Button>
         </StackPanel>
 
-        <Label Content="Magazyn" FontSize="120" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Grid Grid.Row="1" Grid.Column="1" Width="1350" Height="40" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Szukaj po nr. seryjnym" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+            <TextBox x:Name="txtFilter" Grid.Row="0" Grid.Column="1" Margin="7" Width="500" HorizontalAlignment="Left" TextChanged="txtFilter_TextChanged"></TextBox>
+        </Grid>
+        
+        <DataGrid x:Name="LaptopsListView" Sorting="LaptopySortowanie" AutoGenerateColumns="False" CanUserSortColumns="True" SelectionMode="Single" IsReadOnly="True" ItemsSource="{Binding Laptopy}" Grid.Row="1" Grid.Column="1" Margin="0, 40,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Numer seryjny" 
+                            Binding="{Binding NumerSeryjny}" 
+                            CanUserSort="True"
+                            Width="*"/>
+                <DataGridTextColumn Header="Marka" 
+                            Binding="{Binding Marka}" 
+                            CanUserSort="True"
+                            Width="*"/>
+                <DataGridTextColumn Header="Model" 
+                            Binding="{Binding Model}" 
+                            CanUserSort="True"
+                            Width="*"/>
+                <DataGridTextColumn Header="System operacyjny" 
+                            Binding="{Binding SystemOperacyjny}" 
+                            CanUserSort="True"
+                            Width="*"/>
+                <DataGridTextColumn Header="Ilość sztuk" 
+                            Binding="{Binding IloscSztuk}" 
+                            CanUserSort="True"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

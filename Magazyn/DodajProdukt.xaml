@@ -8,7 +8,7 @@
         Title="Dodawanie laptopów" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="295"/>
+            <ColumnDefinition Width="290"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -34,6 +34,11 @@
 
                 <Label Content="Ilość sztuk:"/>
                 <TextBox x:Name="QuantityTextBox" Margin="0,0,0,20" Text="1"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="AddButton" Content="Dodaj produkt" Width="100" Margin="5" Click="AddButton_Click"/>
+                    <Button x:Name="ClearButton" Content="Wyczyść" Width="100" Margin="5" Click="ClearButton_Click"/>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
 
@@ -57,8 +62,8 @@
                 </ListView>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                    <Button x:Name="DeleteButton" Content="Usuń produkt" Width="100" Margin="0, 0, 10, 0" Click="DeleteButton_Click"/>
-                    <Button x:Name="AddButton" Content="Dodaj produkt" Width="100" Click="AddButton_Click"/>
+                    <Button x:Name="EditButton" Content="Edytuj" Width="100" Margin="5" Click="EditButton_Click"/>
+                    <Button x:Name="DeleteButton" Content="Usuń produkt" Width="100" Margin="5" Click="DeleteButton_Click"/>
                 </StackPanel>
             </Grid>
         </GroupBox>

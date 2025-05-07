@@ -5,5 +5,7 @@
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
         <DropShadowEffect x:Key="ShadowEffect" Color="Black" Opacity="0.3" BlurRadius="15"/>
+        <local:AppData x:Key="SharedData"/>
     </Application.Resources>
+    
 </Application>

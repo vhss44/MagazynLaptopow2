@@ -43,6 +43,26 @@ namespace Biblioteka
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
+
+        public static void AktualizujLaptop(string staryNumerSeryjny, Laptop nowyLaptop)
+        {
+            using (var conn = new SQLiteConnection(LoadConnectionString()))
+            {
+                conn.Open();
+                var cmd = new SQLiteCommand(
+                    "UPDATE Laptopy SET NumerSeryjny=@NowyNumer, Marka=@Marka, Model=@Model, SystemOperacyjny=@OS, IloscSztuk=@Ilosc WHERE NumerSeryjny=@StaryNumer",
+                    conn);
+
+                cmd.Parameters.AddWithValue("@NowyNumer", nowyLaptop.NumerSeryjny);
+                cmd.Parameters.AddWithValue("@Marka", nowyLaptop.Marka);
+                cmd.Parameters.AddWithValue("@Model", nowyLaptop.Model);
+                cmd.Parameters.AddWithValue("@OS", nowyLaptop.SystemOperacyjny);
+                cmd.Parameters.AddWithValue("@Ilosc", nowyLaptop.IloscSztuk);
+                cmd.Parameters.AddWithValue("@StaryNumer", staryNumerSeryjny);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
 }

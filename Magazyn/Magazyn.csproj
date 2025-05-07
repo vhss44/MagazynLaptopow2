@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppData.cs" />
     <Compile Include="DodajProdukt.xaml.cs">
       <DependentUpon>DodajProdukt.xaml</DependentUpon>
     </Compile>

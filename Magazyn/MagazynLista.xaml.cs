@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Biblioteka;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +17,13 @@ using System.Windows.Shapes;
 
 namespace Magazyn
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MagazynLista.xaml
-    /// </summary>
+
     public partial class MagazynLista : Window
     {
         public MagazynLista()
         {
             InitializeComponent();
+            ZaladujLaptopy();
         }
 
         private void btnS_Click(object sender, RoutedEventArgs e)
@@ -68,6 +70,38 @@ namespace Magazyn
                 this.Close();
             }
         }
+        private void ZaladujLaptopy()
+        {
+      
 
+            var laptopy = SQLiteDataAccess.ZaladujLaptopy();
+            LaptopsListView.ItemsSource = laptopy;
+        }
+        private void LaptopySortowanie(object sender, DataGridSortingEventArgs e)
+        {
+            var column = e.Column;
+            string propertyName = column.SortMemberPath;
+            e.Handled = false; 
+        }
+
+        private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtFilter.Text))
+            {
+                LaptopsListView.ItemsSource = originalLaptopyList;
+                return;
+            }
+
+            var filtered = originalLaptopyList
+                .Where(l => l.NumerSeryjny.Contains(txtFilter.Text, StringComparison.OrdinalIgnoreCase) ||
+                           l.Marka.Contains(txtFilter.Text, StringComparison.OrdinalIgnoreCase) ||
+                           l.Model.Contains(txtFilter.Text, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            LaptopsListView.ItemsSource = filtered;
+        }
     }
-}
+
+ }
+
+
