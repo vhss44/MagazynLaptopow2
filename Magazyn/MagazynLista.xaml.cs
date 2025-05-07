@@ -19,7 +19,7 @@ using System.Collections.ObjectModel;
 
 namespace Magazyn
 {
-   
+
 
 
 
@@ -91,7 +91,7 @@ namespace Magazyn
         {
             var column = e.Column;
             string propertyName = column.SortMemberPath;
-            e.Handled = false; 
+            e.Handled = false;
         }
 
         private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
@@ -108,8 +108,67 @@ namespace Magazyn
             return false;
         }
 
-    }
+        private void LaptopsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (LaptopsListView.SelectedItem is Laptop selectedLaptop)
+            {
 
+
+                var editWindow = new EdycjaProduktu(selectedLaptop);
+
+                if (editWindow.ShowDialog() == true)
+                {
+                    ZaladujLaptopy();
+                }
+
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LaptopsListView.SelectedItem is Laptop selectedLaptop)
+            {
+                var result = MessageBox.Show(
+                    $"Czy na pewno chcesz usunąć laptopa {selectedLaptop.NumerSeryjny}?",
+                    "Potwierdzenie usunięcia",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    SQLiteDataAccess.UsunLaptop(selectedLaptop.NumerSeryjny);
+                    ZaladujLaptopy();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Najpierw wybierz laptopa do usunięcia.", "Brak wyboru", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (LaptopsListView.SelectedItem is Laptop selectedLaptop)
+            {
+
+
+                var editWindow = new EdycjaProduktu(selectedLaptop);
+
+                if (editWindow.ShowDialog() == true)
+                {
+                    ZaladujLaptopy();
+                }
+
+
+                else
+                {
+                    MessageBox.Show("Najpierw wybierz laptopa do edycji.", "Brak wyboru", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+    }
 }
 
 

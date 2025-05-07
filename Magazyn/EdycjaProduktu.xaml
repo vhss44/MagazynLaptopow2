@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Magazyn"
         mc:Ignorable="d"
-        Title="EdycjaProduktu" Height="400" Width="350">
+        Title="EdycjaProduktu" Height="450" Width="350">
     <Grid>
         <GroupBox Grid.Column="0" Header="Dane produktu" Margin="10">
             <StackPanel Margin="10">
@@ -13,7 +13,7 @@
                 <TextBox x:Name="SerialNumberTextBox" Margin="0,0,0,10"/>
 
                 <Label Content="Marka:"/>
-                <TextBox x:Name="MarkaTextBox" Margin="0,0,0,10"/>
+                <TextBox x:Name="MarkaTextBox" Margin="0,0,0,10" />
 
                 <Label Content="Model:"/>
                 <TextBox x:Name="ModelTextBox" Margin="0,0,0,10"/>
@@ -29,10 +29,14 @@
                 <Label Content="Ilość sztuk:"/>
                 <TextBox x:Name="QuantityTextBox" Margin="0,0,0,20" Text="1"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <Button x:Name="ZapiszProdukt" Content="Zapisz" Width="100" Margin="5" Click="ZapiszProdukt_Click"/>
-                    <Button x:Name="ClearButton" Content="Wyczyść" Width="100" Margin="5" Click="ClearButton_Click"/>
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="ZapiszProdukt" Content="Zapisz" Width="100" Margin="5"  HorizontalAlignment="Center" Click="ZapiszProdukt_Click" IsDefault="True"/>
+                    <Button x:Name="DeleteButton" Content="Usuń Produkt" Width="100" Margin="5" Grid.Column="1" HorizontalAlignment="Center" Click="DeleteButton_Click"/>
+                </Grid>
             </StackPanel>
         </GroupBox>
 
