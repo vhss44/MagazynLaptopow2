@@ -19,37 +19,72 @@ namespace Magazyn
         
     public partial class EdycjaProduktu : Window
     {
-        public Laptop EdytowanyLaptop { get; private set; }
-   
+        private Laptop EdytowanyLaptop;
+
 
         public EdycjaProduktu(Laptop laptop)
         {
             InitializeComponent();
-            EdytowanyLaptop = new Laptop
+            EdytowanyLaptop = laptop;
+            SerialNumberTextBox.Text = laptop.NumerSeryjny;
+            MarkaTextBox.Text = laptop.Marka;
+            ModelTextBox.Text = laptop.Model;
+            OSComboBox.SelectedItem = OSComboBox.Items
+                .Cast<ComboBoxItem>()
+                .FirstOrDefault(item => item.Content.ToString() == laptop.SystemOperacyjny);
+            QuantityTextBox.Text = laptop.IloscSztuk.ToString();
+
+          
+        }
+        public bool SprawdzPoprawnoscDanych()
+        {
+            if (string.IsNullOrWhiteSpace(SerialNumberTextBox.Text) ||
+                string.IsNullOrWhiteSpace(MarkaTextBox.Text) ||
+                string.IsNullOrWhiteSpace(ModelTextBox.Text) ||
+                OSComboBox.SelectedItem == null ||
+                string.IsNullOrWhiteSpace(QuantityTextBox.Text))
             {
-                NumerSeryjny = laptop.NumerSeryjny,
-                Marka = laptop.Marka,
-                Model = laptop.Model,
-                SystemOperacyjny = laptop.SystemOperacyjny,
-                IloscSztuk = laptop.IloscSztuk
+                MessageBox.Show("Proszę uzupełnić wszystkie pola.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            if (!int.TryParse(QuantityTextBox.Text, out _))
+            {
+                MessageBox.Show("Ilość sztuk musi być liczbą.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public void ZapiszProdukt_Click(object sender, RoutedEventArgs e)
+        {
+            if (!SprawdzPoprawnoscDanych())
+                return;
+
+            var laptop = new Laptop
+            {
+                NumerSeryjny = SerialNumberTextBox.Text,
+                Marka = MarkaTextBox.Text,
+                Model = ModelTextBox.Text,
+                SystemOperacyjny = ((ComboBoxItem)OSComboBox.SelectedItem).Content.ToString(),
+                IloscSztuk = int.Parse(QuantityTextBox.Text)
             };
 
-            DataContext = this;
-        }
-    
-        private void ZapiszProdukt_Click(object sender, RoutedEventArgs e)
-        {
+            SQLiteDataAccess.AktualizujLaptop(EdytowanyLaptop.NumerSeryjny, laptop);
+            MessageBox.Show("Laptop zaktualizowany pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+
             DialogResult = true;
             Close();
         }
 
-        private void ClearButton_Click(object sender, RoutedEventArgs e)
+
+    
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            SerialNumberTextBox.Clear();
-            MarkaTextBox.Clear();
-            ModelTextBox.Clear();
-            OSComboBox.SelectedIndex = -1;
-            QuantityTextBox.Clear();
+
         }
     }
 }
