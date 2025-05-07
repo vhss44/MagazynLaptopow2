@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Magazyn"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Raport" Height="800" Width="1600"
         WindowState="Maximized">
@@ -36,25 +37,29 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Background="#334251" Height="40" Grid.ColumnSpan="2">
 
+        <!-- Górny pasek -->
+        <Border Background="#334251" Height="40" Grid.ColumnSpan="2">
             <Grid>
-                <Button x:Name="btnS"  Width="40" Height="40" HorizontalAlignment="Left" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Click="btnS_Click">
-                    <Image Source ="pack://application:,,,/img/home.png"  Stretch="Uniform"></Image>
+                <Button x:Name="btnS" Width="40" Height="40" HorizontalAlignment="Left" BorderBrush="Transparent" 
+                        Background="Transparent" VerticalAlignment="Center" Click="btnS_Click">
+                    <Image Source="pack://application:,,,/img/home.png" Stretch="Uniform"/>
                 </Button>
-                <Button x:Name="UserButton" Width="40" Height="40" Margin="0,0,10,0" HorizontalAlignment="Right" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Click="UserButton_Click">
+                <Button x:Name="UserButton" Width="40" Height="40" Margin="0,0,10,0" HorizontalAlignment="Right" 
+                        BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Click="UserButton_Click">
                     <Image Source="pack://application:,,,/img/person.png" Stretch="Uniform"/>
                 </Button>
 
-                <Popup x:Name="UserPopup" PlacementTarget="{Binding ElementName=UserButton}" Placement="Bottom" StaysOpen="False" AllowsTransparency="True">
+                <Popup x:Name="UserPopup" PlacementTarget="{Binding ElementName=UserButton}" Placement="Bottom" 
+                       StaysOpen="False" AllowsTransparency="True">
                     <Border Background="#334251" CornerRadius="5" Padding="5" BorderBrush="#51657b" BorderThickness="1">
                         <StackPanel>
                             <Button Content="Wyloguj" Click="LogoutButton_Click" Style="{StaticResource MenuItemButtonStyle}"/>
@@ -62,55 +67,76 @@
                     </Border>
                 </Popup>
             </Grid>
-
         </Border>
 
+        <!-- Lewe menu -->
         <StackPanel Grid.Column="0" Grid.Row="1" Background="#51657b" Orientation="Vertical">
-            <!--DODAWANIE PRODUKTU-->
-
+            <!-- DODAWANIE PRODUKTU -->
             <Button x:Name="DodajProduktBtn" Background="#27313c" Foreground="#e4e5e7" Click="DodajProduktBtn_Click">
-
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-
-                    <Image Source ="pack://application:,,,/img/plus.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
-                    <TextBlock VerticalAlignment="Center" Text="Dodaj produkt" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                    <Image Source="pack://application:,,,/img/plus.png" HorizontalAlignment="Left" Width="30" Height="50"/>
+                    <TextBlock VerticalAlignment="Center" Text="Dodaj produkt" HorizontalAlignment="Right" Width="180" 
+                               Margin="15, 0, 0, 0" FontSize="18"/>
                 </StackPanel>
             </Button>
 
-
-            <!--MAGAZYN-->
-
+            <!-- MAGAZYN -->
             <Button x:Name="MagazynBtn" Background="#27313c" Foreground="#e4e5e7" Click="MagazynBtn_Click">
-
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-
-                    <Image Source ="pack://application:,,,/img/package.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
-                    <TextBlock VerticalAlignment="Center" Text="Magazyn" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                    <Image Source="pack://application:,,,/img/package.png" HorizontalAlignment="Left" Width="30" Height="50"/>
+                    <TextBlock VerticalAlignment="Center" Text="Magazyn" HorizontalAlignment="Right" Width="180" 
+                               Margin="15, 0, 0, 0" FontSize="18"/>
                 </StackPanel>
             </Button>
 
-
-            <!--RAPORT-->
+            <!-- RAPORT -->
             <Button Background="#1e2226" Foreground="#e4e5e7">
-
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-
-                    <Image Source ="pack://application:,,,/img/raport.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
-                    <TextBlock VerticalAlignment="Center" Text="Raport" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                    <Image Source="pack://application:,,,/img/raport.png" HorizontalAlignment="Left" Width="30" Height="50"/>
+                    <TextBlock VerticalAlignment="Center" Text="Raport" HorizontalAlignment="Right" Width="180" 
+                               Margin="15, 0, 0, 0" FontSize="18"/>
                 </StackPanel>
             </Button>
 
-            <!--INFORMACJE-->
+            <!-- INFORMACJE -->
             <Button x:Name="InformacjeBtn" Background="#27313c" Foreground="#e4e5e7" Click="InformacjeBtn_Click">
-
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-
-                    <Image Source ="pack://application:,,,/img/info.png" HorizontalAlignment="Left" Width="30" Height="50"></Image>
-                    <TextBlock VerticalAlignment="Center" Text="Informacje" HorizontalAlignment="Right" Width="180" Margin="15, 0, 0, 0" FontSize="18"/>
+                    <Image Source="pack://application:,,,/img/info.png" HorizontalAlignment="Left" Width="30" Height="50"/>
+                    <TextBlock VerticalAlignment="Center" Text="Informacje" HorizontalAlignment="Right" Width="180" 
+                               Margin="15, 0, 0, 0" FontSize="18"/>
                 </StackPanel>
             </Button>
         </StackPanel>
 
-        <Label Content="Raport" FontSize="120" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <!-- WYKRESY - ZMIENIAMY TYLKO TĘ CZĘŚĆ -->
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10">
+            <TabControl>
+                <!-- TAB 1: PODSUMOWANIE -->
+                <TabItem Header="Podsumowanie">
+                    <StackPanel>
+                        <TextBlock x:Name="txtRaport" FontSize="16" Margin="10"/>
+                        <DataGrid x:Name="dgMalolaptop" AutoGenerateColumns="False" Height="200">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Marka" Binding="{Binding Marka}" Width="*"/>
+                                <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*"/>
+                                <DataGridTextColumn Header="Ilość" Binding="{Binding IloscSztuk}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+
+                <!-- TAB 2: WYKRES -->
+                <TabItem Header="Wykres">
+                    <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Marka" Labels="{Binding Labels}"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Ilość"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </TabItem>
+            </TabControl>
+        </Grid>
     </Grid>
 </Window>
