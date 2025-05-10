@@ -112,10 +112,20 @@
         <Grid Grid.Column="1" Grid.Row="1" Margin="10">
             <TabControl>
                 <!-- TAB 1: PODSUMOWANIE -->
+              
                 <TabItem Header="Podsumowanie">
                     <StackPanel>
+                        
                         <TextBlock x:Name="txtRaport" FontSize="16" Margin="10"/>
-                        <Label Content="Laptopy na wyczerpaniu: "></Label>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Laptopy na wyczerpaniu: " Width="300" HorizontalAlignment="Left"></Label>
+                            <Button x:Name="RefreshButton" Content="Odśwież" FontSize="13" Width="130" HorizontalAlignment="Right" Grid.Column="1" Margin="10" Click="RefreshButton_Click"></Button>
+                        </Grid>
                         <DataGrid x:Name="dgMalolaptop" AutoGenerateColumns="False" Height="200">
                          
                             <DataGrid.Columns>

@@ -30,6 +30,7 @@ namespace Magazyn
         {
             InitializeComponent();
             Laptopy = ZaladujLaptopy();
+            SQLiteDataAccess.SprawdzICzyUzupelnijBaze();
         }
 
         private static string LoadConnectionString()

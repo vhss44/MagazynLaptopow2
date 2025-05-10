@@ -163,15 +163,16 @@ namespace Magazyn
                 {
                     ZaladujLaptopy();
                 }
-
-
-                else
-                {
-                    MessageBox.Show("Najpierw wybierz laptopa do edycji.", "Brak wyboru", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
             }
         }
 
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+           
+               var laptopy = SQLiteDataAccess.ZaladujLaptopy();
+                LaptopsListView.ItemsSource = laptopy;
+           
+        }
     }
 }
 

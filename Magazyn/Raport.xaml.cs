@@ -33,7 +33,7 @@ namespace Magazyn
 
         private void ZaladujIZaktualizujDane()
         {
-            // Załaduj dane z bazy przy każdym otwarciu okna
+        
             var laptopy = SQLiteDataAccess.ZaladujLaptopy();
             GenerujRaport(laptopy);
         }
@@ -46,17 +46,16 @@ namespace Magazyn
                 return;
             }
 
-            // Podsumowanie tekstowe
+        
             txtRaport.Text = $"Raport z dnia: {DateTime.Now}\n\n" +
                            $"Łączna liczba laptopów: {laptopy.Sum(l => l.IloscSztuk)}\n" +
                            $"Liczba modeli: {laptopy.Count}\n" +
                            $"Unikalnych marek: {laptopy.Select(l => l.Marka).Distinct().Count()}";
 
-            // Laptopy na wyczerpaniu
             var laptopyNaWyczerpaniu = laptopy.Where(l => l.IloscSztuk < 3).ToList();
             dgMalolaptop.ItemsSource = laptopyNaWyczerpaniu;
 
-            // Przygotowanie wykresu
+            
             var daneWykresu = laptopy
                 .GroupBy(l => l.Marka)
                 .Select(g => new { Marka = g.Key, Ilosc = g.Sum(l => l.IloscSztuk) })
@@ -121,6 +120,21 @@ namespace Magazyn
                 mainWindow.Show();
                 this.Close();
             }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                var laptopy = SQLiteDataAccess.ZaladujLaptopy();
+                GenerujRaport(laptopy);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Błąd ładowania danych: {ex.Message}");
+            }
+
         }
     }
 }

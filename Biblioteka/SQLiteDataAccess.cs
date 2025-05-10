@@ -17,9 +17,59 @@ namespace Biblioteka
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 var output = cnn.Query<Laptop>("SELECT * FROM Laptopy", new DynamicParameters());
+
+    
                 return output.ToList();
+ 
+            }
+
+        }
+        public static void SprawdzICzyUzupelnijBaze()
+        {
+            using (var conn = new SQLiteConnection(LoadConnectionString()))
+            {
+                conn.Open();
+
+              
+                var tableExists = conn.ExecuteScalar<int>(
+                    "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='Laptopy'") > 0;
+
+                if (tableExists)
+                {
+                    
+                    var isEmpty = conn.ExecuteScalar<int>("SELECT COUNT(*) FROM Laptopy") == 0;
+
+                    if (isEmpty)
+                    {
+                        
+                        using (var transaction = conn.BeginTransaction())
+                        {
+                            try
+                            {
+                                conn.Execute(@"
+                            INSERT INTO Laptopy (NumerSeryjny, Marka, Model, SystemOperacyjny, IloscSztuk)
+                            VALUES 
+                                ('SN-001', 'Dell', 'XPS 15', 'Windows', 5),
+                                ('SN-002', 'HP', 'ProBook 450', 'Windows', 3),
+                                ('SN-003', 'Lenovo', 'ThinkPad T490', 'Windows', 2),
+                                ('ADC-20251127', 'HP', 'Omen 16', 'Windows', 1),
+                                ('ADC-202511270FC', 'MSI', 'Katana 17', 'Windows', 10),
+                                ('MSC-20241045FX', 'Apple', 'MacBook Pro M4 Pro', 'macOS', 16)",
+                                    transaction: transaction);
+
+                                transaction.Commit();
+                            }
+                            catch
+                            {
+                                transaction.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                }
             }
         }
+
 
         public static void ZapiszLaptop(Laptop laptop)
         {
