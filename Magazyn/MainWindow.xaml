@@ -111,6 +111,8 @@
             </Button>
         </StackPanel>
 
-        <Label Content="Strona główna" FontSize="120" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+        <Image Source="/img/logo.png" Grid.Row="1" Grid.Column="1" Height="500" Margin="0, 0, 0, 100"/>
+        <Label Content="Magazyn Laptopów" FontWeight="Bold" Foreground="#f67439" FontSize="60" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 490, 0,0"></Label>
     </Grid>
 </Window>
