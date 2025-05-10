@@ -127,7 +127,9 @@
 
                 <!-- TAB 2: WYKRES -->
                 <TabItem Header="Wykres">
-                    <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right">
+                    <lvc:CartesianChart Series="{Binding SeriesCollection}" 
+                    LegendLocation="Right"
+                    Margin="20">
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Marka" Labels="{Binding Labels}"/>
                         </lvc:CartesianChart.AxisX>

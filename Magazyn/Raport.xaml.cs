@@ -19,28 +19,32 @@ using System.Data.SQLite;
 
 namespace Magazyn
 {
-    /// <summary>
-    /// Logika interakcji dla klasy Raport.xaml
-    /// </summary>
     public partial class Raport : Window
     {
         public SeriesCollection SeriesCollection { get; set; }
         public List<string> Labels { get; set; }
+        private List<Laptop> _laptopy; // Dodaj pole klasy
 
-        // JEDYNY KONSTRUKTOR
         public Raport(List<Laptop> laptopy)
         {
-            InitializeComponent(); // BRAKOWAŁO TEJ LINII!
+            InitializeComponent();
+            _laptopy = laptopy; // Przypisz laptopy do pola klasy
+
+            // Inicjalizuj właściwości przed użyciem
+            SeriesCollection = new SeriesCollection();
+            Labels = new List<string>();
+
+            DataContext = null;
             DataContext = this;
-            GenerujRaport(laptopy);
+            GenerujRaport(laptopy ?? new List<Laptop>()); // Zabezpieczenie przed null
         }
 
-        private void GenerujRaport(List<Laptop> laptopy) // poprawiona nazwa parametru (mała litera)
+        private void GenerujRaport(List<Laptop> laptopy)
         {
-            // Sprawdź czy lista nie jest pusta/null
-            if (laptopy == null || !laptopy.Any())
+            // Sprawdź dane
+            if (!laptopy.Any())
             {
-                MessageBox.Show("Brak danych do raportu!");
+                txtRaport.Text = "Brak danych do wyświetlenia";
                 return;
             }
 
@@ -51,23 +55,40 @@ namespace Magazyn
                            $"Unikalnych marek: {laptopy.Select(l => l.Marka).Distinct().Count()}";
 
             // 2. Laptopy na wyczerpaniu
-            dgMalolaptop.ItemsSource = laptopy.Where(l => l.IloscSztuk < 3).ToList();
+            // Zmodyfikuj fragment z filtrowaniem
+            var laptopyNaWyczerpaniu = laptopy
+                .Where(l => l.IloscSztuk < 3)
+                .ToList();
 
+            // Dodaj sprawdzenie
+            if (!laptopyNaWyczerpaniu.Any())
+            {
+                MessageBox.Show("Brak laptopów na wyczerpaniu!");
+            }
+
+            dgMalolaptop.ItemsSource = laptopyNaWyczerpaniu;
             // 3. Przygotowanie wykresu
             var daneWykresu = laptopy
-                .GroupBy(l => l.Marka)
-                .Select(g => new { Marka = g.Key, Ilosc = g.Sum(l => l.IloscSztuk) })
-                .OrderByDescending(x => x.Ilosc);
+       .GroupBy(l => l.Marka)
+       .Select(g => new { Marka = g.Key, Ilosc = g.Sum(l => l.IloscSztuk) })
+       .OrderByDescending(x => x.Ilosc)
+       .ToList();
 
+            // Proste etykiety - tylko marki na osi X
             Labels = daneWykresu.Select(x => x.Marka).ToList();
-            SeriesCollection = new SeriesCollection
-        {
-            new ColumnSeries
+
+            SeriesCollection.Clear();
+            SeriesCollection.Add(new ColumnSeries
             {
                 Title = "Laptopy",
-                Values = new ChartValues<int>(daneWykresu.Select(x => x.Ilosc))
-            }
-        };
+                Values = new ChartValues<int>(daneWykresu.Select(x => x.Ilosc)),
+
+                // Dodaj tylko te dwie linie
+                DataLabels = true,
+                LabelPoint = point => $"{point.Y}" // Pokazuje tylko liczby nad kolumnami
+            });
+
+
         }
 
 
@@ -80,7 +101,7 @@ namespace Magazyn
 
         private void MagazynBtn_Click(object sender, RoutedEventArgs e)
         {
-            MagazynLista mainWindow = new MagazynLista();
+            MagazynLista mainWindow = new MagazynLista(_laptopy);
             mainWindow.Show();
             this.Close();
         }
@@ -88,7 +109,7 @@ namespace Magazyn
 
         private void InformacjeBtn_Click(object sender, RoutedEventArgs e)
         {
-            Informacje mainWindow = new Informacje();
+            Informacje mainWindow = new Informacje(_laptopy);
             mainWindow.Show();
             this.Close();
         }

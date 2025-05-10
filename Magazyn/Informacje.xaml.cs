@@ -21,9 +21,10 @@ namespace Magazyn
     public partial class Informacje : Window
     {
         public List<Laptop> Laptopy { get; set; }
-        public Informacje()
+        public Informacje(List<Laptop> laptopy)
         {
             InitializeComponent();
+            Laptopy = laptopy;
         }
 
         private void btnS_Click(object sender, RoutedEventArgs e)
@@ -35,14 +36,20 @@ namespace Magazyn
 
         private void MagazynBtn_Click(object sender, RoutedEventArgs e)
         {
-            MagazynLista mainWindow = new MagazynLista();
+            MagazynLista mainWindow = new MagazynLista(Laptopy);
             mainWindow.Show();
             this.Close();
         }
 
         private void RaportBtn_Click(object sender, RoutedEventArgs e)
         {
-            var raport = new Raport(Laptopy); // Laptopy to lista załadowana w konstruktorze MainWindow
+            if (Laptopy == null || !Laptopy.Any())
+            {
+                MessageBox.Show("Najpierw dodaj laptopy do magazynu!");
+                return;
+            }
+
+            var raport = new Raport(Laptopy);
             raport.Show();
             this.Close();
         }

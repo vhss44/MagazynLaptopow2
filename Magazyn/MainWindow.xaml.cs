@@ -67,21 +67,27 @@ namespace Magazyn
 
         private void MagazynBtn_Click(object sender, RoutedEventArgs e)
         {
-            MagazynLista mainWindow = new MagazynLista();
+            MagazynLista mainWindow = new MagazynLista(Laptopy);
             mainWindow.Show();
             this.Close();
         }
 
         private void RaportBtn_Click(object sender, RoutedEventArgs e)
         {
-            var raport = new Raport(Laptopy); // Laptopy to lista załadowana w konstruktorze MainWindow
+            if (Laptopy == null || !Laptopy.Any())
+            {
+                MessageBox.Show("Najpierw dodaj laptopy do magazynu!");
+                return;
+            }
+
+            var raport = new Raport(Laptopy);
             raport.Show();
             this.Close();
         }
 
         private void InformacjeBtn_Click(object sender, RoutedEventArgs e)
         {
-            Informacje mainWindow = new Informacje();
+            Informacje mainWindow = new Informacje(Laptopy);
             mainWindow.Show();
             this.Close();
         }
