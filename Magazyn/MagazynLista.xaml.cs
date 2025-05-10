@@ -31,11 +31,11 @@ namespace Magazyn
         private ICollectionView view;
 
 
-        public MagazynLista(List<Laptop> laptopy)
+        public MagazynLista()
         {
             InitializeComponent();
             ZaladujLaptopy();
-            Laptopy = laptopy;
+
         }
 
         private void btnS_Click(object sender, RoutedEventArgs e)
@@ -47,20 +47,15 @@ namespace Magazyn
 
         private void RaportBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (Laptopy == null || !Laptopy.Any())
-            {
-                MessageBox.Show("Najpierw dodaj laptopy do magazynu!");
-                return;
-            }
 
-            var raport = new Raport(Laptopy);
+            var raport = new Raport();
             raport.Show();
             this.Close();
         }
 
         private void InformacjeBtn_Click(object sender, RoutedEventArgs e)
         {
-            Informacje mainWindow = new Informacje(Laptopy);
+            Informacje mainWindow = new Informacje();
             mainWindow.Show();
             this.Close();
         }

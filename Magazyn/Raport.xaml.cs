@@ -23,72 +23,56 @@ namespace Magazyn
     {
         public SeriesCollection SeriesCollection { get; set; }
         public List<string> Labels { get; set; }
-        private List<Laptop> _laptopy; 
 
-        public Raport(List<Laptop> laptopy)
+        public Raport()
         {
             InitializeComponent();
-
-            _laptopy = laptopy; 
-
-       
-            SeriesCollection = new SeriesCollection();
-            Labels = new List<string>();
-
-            DataContext = null;
             DataContext = this;
-            GenerujRaport(laptopy ?? new List<Laptop>());
+            ZaladujIZaktualizujDane();
+        }
+
+        private void ZaladujIZaktualizujDane()
+        {
+            // Załaduj dane z bazy przy każdym otwarciu okna
+            var laptopy = SQLiteDataAccess.ZaladujLaptopy();
+            GenerujRaport(laptopy);
         }
 
         private void GenerujRaport(List<Laptop> laptopy)
         {
-           
             if (!laptopy.Any())
             {
                 txtRaport.Text = "Brak danych do wyświetlenia";
                 return;
             }
 
-      
+            // Podsumowanie tekstowe
             txtRaport.Text = $"Raport z dnia: {DateTime.Now}\n\n" +
                            $"Łączna liczba laptopów: {laptopy.Sum(l => l.IloscSztuk)}\n" +
                            $"Liczba modeli: {laptopy.Count}\n" +
                            $"Unikalnych marek: {laptopy.Select(l => l.Marka).Distinct().Count()}";
 
-       
-            var laptopyNaWyczerpaniu = laptopy
-                .Where(l => l.IloscSztuk < 3)
+            // Laptopy na wyczerpaniu
+            var laptopyNaWyczerpaniu = laptopy.Where(l => l.IloscSztuk < 3).ToList();
+            dgMalolaptop.ItemsSource = laptopyNaWyczerpaniu;
+
+            // Przygotowanie wykresu
+            var daneWykresu = laptopy
+                .GroupBy(l => l.Marka)
+                .Select(g => new { Marka = g.Key, Ilosc = g.Sum(l => l.IloscSztuk) })
+                .OrderByDescending(x => x.Ilosc)
                 .ToList();
 
-   
-            if (!laptopyNaWyczerpaniu.Any())
-            {
-                MessageBox.Show("Brak laptopów na wyczerpaniu!");
-            }
-
-            dgMalolaptop.ItemsSource = laptopyNaWyczerpaniu;
-     
-            var daneWykresu = laptopy
-       .GroupBy(l => l.Marka)
-       .Select(g => new { Marka = g.Key, Ilosc = g.Sum(l => l.IloscSztuk) })
-       .OrderByDescending(x => x.Ilosc)
-       .ToList();
-
-      
             Labels = daneWykresu.Select(x => x.Marka).ToList();
-
-            SeriesCollection.Clear();
-            SeriesCollection.Add(new ColumnSeries
+            SeriesCollection = new SeriesCollection
             {
-                Title = "Laptopy",
-                Values = new ChartValues<int>(daneWykresu.Select(x => x.Ilosc)),
-
-          
-                DataLabels = true,
-                LabelPoint = point => $"{point.Y}"
-            });
-
-
+                new ColumnSeries
+                {
+                    Title = "Laptopy",
+                    Values = new ChartValues<int>(daneWykresu.Select(x => x.Ilosc)),
+                    DataLabels = true
+                }
+            };
         }
 
 
@@ -101,7 +85,7 @@ namespace Magazyn
 
         private void MagazynBtn_Click(object sender, RoutedEventArgs e)
         {
-            MagazynLista mainWindow = new MagazynLista(_laptopy);
+            MagazynLista mainWindow = new MagazynLista();
             mainWindow.Show();
             this.Close();
         }
@@ -109,7 +93,7 @@ namespace Magazyn
 
         private void InformacjeBtn_Click(object sender, RoutedEventArgs e)
         {
-            Informacje mainWindow = new Informacje(_laptopy);
+            Informacje mainWindow = new Informacje();
             mainWindow.Show();
             this.Close();
         }
