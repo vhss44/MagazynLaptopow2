@@ -115,7 +115,9 @@
                 <TabItem Header="Podsumowanie">
                     <StackPanel>
                         <TextBlock x:Name="txtRaport" FontSize="16" Margin="10"/>
+                        <Label Content="Laptopy na wyczerpaniu: "></Label>
                         <DataGrid x:Name="dgMalolaptop" AutoGenerateColumns="False" Height="200">
+                         
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Marka" Binding="{Binding Marka}" Width="*"/>
                                 <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*"/>

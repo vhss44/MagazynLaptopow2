@@ -129,7 +129,7 @@
             <Label Content="Julia Daniluk" FontSize="25" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Foreground="#535353" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,90 ,0, 0"></Label>
             <Label Content="Mateusz Dytkowski" FontSize="25" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Foreground="#535353" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,130 ,0, 0"></Label>
             <Label Content="Bartosz Szumiak" FontSize="25" FontFamily="Arial" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Foreground="#535353" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,170 ,0, 0"></Label>
-            
+            <Image Source="pack://application:,,,/img/logo.png" Stretch="Uniform" Grid.Row="1" Grid.ColumnSpan="2"/>
         </Grid>
        
     </Grid>
