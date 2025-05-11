@@ -115,39 +115,40 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Szukaj po nr. seryjnym:" Margin="0, 0, 30, 0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+            <Label Content="Szukaj po nr. seryjnym:" Margin="0, 0, 30, 0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
             <TextBox x:Name="txtFilter" Grid.Row="0" Margin="7, 7 , 60, 7" Width="500" HorizontalAlignment="Center" VerticalContentAlignment="Center" TextChanged="txtFilter_TextChanged" Grid.ColumnSpan="2" Grid.Column="0"></TextBox>
             <Button x:Name="DeleteButton" Content="Usuń Produkt" FontSize="13" Width="130" Height="25" Margin="7" Grid.Column="1" HorizontalAlignment="Right" Click="DeleteButton_Click"></Button>
-            <Button x:Name="EditButton" Content="Edytuj" FontSize="13" Width="130" Height="25" Margin="7, 0, 150, 0" Grid.Column="1" HorizontalAlignment="Right" Click="EditButton_Click"></Button>
-            <Button x:Name="RefreshButton" Content="Odśwież" FontSize="13" Width="130" Height="25" Margin="7, 0, 300, 0" Grid.Column="1" HorizontalAlignment="Right" Click="RefreshButton_Click"></Button>
+            <Button x:Name="EditButton" Content="Edytuj" FontSize="13" Width="130" Height="25" Margin="7" Grid.Column="2" HorizontalAlignment="Left" Click="EditButton_Click"></Button>
+            <Button x:Name="RefreshButton" Content="Odśwież" FontSize="13" Width="130" Height="25" Margin="7" Grid.Column="2" HorizontalAlignment="Center" Click="RefreshButton_Click"></Button>
         </Grid>
 
        
         
-        <DataGrid x:Name="LaptopsListView" Sorting="LaptopySortowanie" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" MouseDoubleClick="LaptopsListView_MouseDoubleClick" SelectionMode="Single" ItemsSource="{Binding Laptopy}" Grid.Row="1" Grid.Column="1" Margin="0, 40,0,0">
+        <DataGrid x:Name="LaptopsListView" Sorting="LaptopySortowanie" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" MouseDoubleClick="LaptopsListView_MouseDoubleClick" SelectionMode="Single" ItemsSource="{Binding Laptopy}" Grid.Row="1" Grid.Column="1" Margin="0,40,1,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Numer seryjny" 
                             Binding="{Binding NumerSeryjny}" 
                             CanUserSort="True"
-                            Width="*"/>
+                            Width="auto"/>
                 <DataGridTextColumn Header="Marka" 
                             Binding="{Binding Marka}" 
                             CanUserSort="True"
-                            Width="*"/>
+                            Width="auto"/>
                 <DataGridTextColumn Header="Model" 
                             Binding="{Binding Model}" 
                             CanUserSort="True"
-                            Width="*"/>
+                            Width="auto"/>
                 <DataGridTextColumn Header="System operacyjny" 
                             Binding="{Binding SystemOperacyjny}" 
                             CanUserSort="True"
-                            Width="*"/>
+                            Width="auto"/>
                 <DataGridTextColumn Header="Ilość sztuk" 
                             Binding="{Binding IloscSztuk}" 
                             CanUserSort="True"
-                            Width="*"/>
+                            Width="auto"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
