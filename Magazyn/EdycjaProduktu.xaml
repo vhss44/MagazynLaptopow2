@@ -35,7 +35,6 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="ZapiszProdukt" Content="Zapisz" Width="100" Margin="5"  HorizontalAlignment="Center" Click="ZapiszProdukt_Click" IsDefault="True"/>
-                    <Button x:Name="DeleteButton" Content="Usuń Produkt" Width="100" Margin="5" Grid.Column="1" HorizontalAlignment="Center" Click="DeleteButton_Click"/>
                 </Grid>
             </StackPanel>
         </GroupBox>
