@@ -132,23 +132,23 @@
                 <DataGridTextColumn Header="Numer seryjny" 
                             Binding="{Binding NumerSeryjny}" 
                             CanUserSort="True"
-                            Width="auto"/>
+                            Width="200"/>
                 <DataGridTextColumn Header="Marka" 
                             Binding="{Binding Marka}" 
                             CanUserSort="True"
-                            Width="auto"/>
+                             Width="200"/>
                 <DataGridTextColumn Header="Model" 
                             Binding="{Binding Model}" 
                             CanUserSort="True"
-                            Width="auto"/>
+                             Width="200"/>
                 <DataGridTextColumn Header="System operacyjny" 
                             Binding="{Binding SystemOperacyjny}" 
                             CanUserSort="True"
-                            Width="auto"/>
+                            Width="200"/>
                 <DataGridTextColumn Header="Ilość sztuk" 
                             Binding="{Binding IloscSztuk}" 
                             CanUserSort="True"
-                            Width="auto"/>
+                             Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
