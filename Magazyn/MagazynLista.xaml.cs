@@ -25,7 +25,7 @@ namespace Magazyn
 
     public partial class MagazynLista : Window
     {
-        public List<Laptop> Laptopy { get; set; }
+       
 
         private ObservableCollection<Laptop> laptopy = new ObservableCollection<Laptop>();
         private ICollectionView view;
